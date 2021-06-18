@@ -1,0 +1,6 @@
+git clone https://github.com/if0balino/openmusic-api.git
+git config --global user.name if0balino
+git config --global user.email balino.ical@gmail.com
+git add .
+git commit -m 'test'
+git push origin master
