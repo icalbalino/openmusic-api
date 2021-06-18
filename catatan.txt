@@ -4,3 +4,6 @@ git config --global user.email balino.ical@gmail.com
 git add .
 git commit -m 'test'
 git push origin master
+
+npm init --y
+ 
