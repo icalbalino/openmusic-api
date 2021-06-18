@@ -6,4 +6,4 @@ git commit -m 'test'
 git push origin master
 
 npm init --y
- 
+npm install nodemon --save-dev
