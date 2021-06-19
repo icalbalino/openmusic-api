@@ -12,3 +12,7 @@ npx eslint --init
 npm install @hapi/hapi
 npm install nanoid
 
+npm install dotenv
+npm install joi
+npm install node-pg-migrate
+npm install pg
