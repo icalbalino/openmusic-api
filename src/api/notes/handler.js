@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-empty-function */
 /* eslint-disable object-curly-newline */
 /* eslint-disable space-before-blocks */
@@ -44,11 +45,33 @@ class MusicsHandler {
   }
   
   async getSongsHandler(){
-    
+    const songs = this._service.getMusic();
+    return {
+      status: 'success',
+      data: {
+        songs,
+      },
+    };
   }
 
-  async getSongByIdHandler(){
-
+  async getSongByIdHandler(request, h){
+    try {
+      const { id } = request.params;
+      const songs = this._service.getMusicById(id);
+      return {
+        status: 'success',
+        data: {
+          songs,
+        },
+      };
+    } catch (error) {
+      const response = h.response({
+        status: 'fail',
+        message: error.message,
+      });
+      response.code(404);
+      return response;
+    }
   }
 
   async putSongByIdHandler(){
