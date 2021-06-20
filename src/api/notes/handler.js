@@ -74,12 +74,44 @@ class MusicsHandler {
     }
   }
 
-  async putSongByIdHandler(){
-
+  async putSongByIdHandler(request, h){
+    try {
+      const { id } = request.params;
+ 
+      this._service.editMusicById(id, request.payload);
+ 
+      return {
+        status: 'success',
+        message: 'lagu berhasil diperbarui',
+      };
+    } catch (error) {
+      const response = h.response({
+        status: 'fail',
+        message: error.message,
+      });
+      response.code(404);
+      return response;
+    }
   }
 
-  async deleteSongByIdHandler(){
+  async deleteSongByIdHandler(request, h){
+    try {
+      const { id } = request.params;
 
+      this._service.deleteMusicById(id);
+      
+      return {
+        status: 'success',
+        message: 'lagu berhasil dihapus',
+      };
+    } catch (error) {
+      const response = h.response({
+        status: 'fail',
+        message: 'Lagu gagal dihapus. Id tidak ditemukan',
+      });
+      response.code(404);
+      return response;
+    }
   }
 }
 
