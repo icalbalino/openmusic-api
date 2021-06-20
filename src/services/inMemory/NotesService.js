@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable eol-last */
 /* eslint-disable object-property-newline */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable no-multiple-empty-lines */
@@ -64,4 +65,15 @@ class NotesService {
       updatedAt,
     };
   }
+
+  deleteMusicById(id) {
+    const index = this._music.findIndex((music) => music.id === id);
+    if (index === -1) {
+      throw new Error('Catatan gagal dihapus. Id tidak ditemukan');
+    }
+    this._music.splice(index, 1);
+  }
 }
+
+
+module.exports = NotesService;
