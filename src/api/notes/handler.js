@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-empty-function */
 /* eslint-disable object-curly-newline */
 /* eslint-disable space-before-blocks */
 /* eslint-disable class-methods-use-this */
@@ -14,20 +15,20 @@ class MusicsHandler {
     this._validator = validator;
   }
 
-  async postMusicHandler(request, h){
+  async postSongsHandler(request, h){
     try {
       const { title = 'untitled', year, performer, genre, duration } = request.payload;
-
-      const noteId = await this._service.addNote({ title, year, performer, genre, duration });
-    
+ 
+      const songId = this._service.addMusic({ title, year, performer, genre, duration });
+ 
       const response = h.response({
         status: 'success',
-        message: 'Catatan berhasil ditambahkan',
+        message: 'Lagu berhasil ditambahkan',
         data: {
-          noteId,
+          songId,
         },
       });
-      
+
       response.code(201);
       return response;
 
@@ -36,12 +37,27 @@ class MusicsHandler {
         status: 'fail',
         message: error.message,
       });
+
       response.code(400);
       return response;
     }
   }
   
+  async getSongsHandler(){
+    
+  }
 
+  async getSongByIdHandler(){
+
+  }
+
+  async putSongByIdHandler(){
+
+  }
+
+  async deleteSongByIdHandler(){
+
+  }
 }
 
 module.exports = MusicsHandler;
