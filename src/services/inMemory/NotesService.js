@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable object-property-newline */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable no-multiple-empty-lines */
 /* eslint-disable object-curly-newline */
@@ -42,5 +43,25 @@ class NotesService {
       throw new Error('Catatan tidak ditemukan');
     }
     return music;
+  }
+
+  editMusicById(id, { title, year, performer, genre, duration }) {
+    const index = this._music.findIndex((music) => music.id === id);
+ 
+    if (index === -1) {
+      throw new Error('Gagal memperbarui catatan. Id tidak ditemukan');
+    }
+ 
+    const updatedAt = new Date().toISOString();
+ 
+    this._music[index] = {
+      ...this._music[index],
+      title,
+      year,
+      performer,
+      genre,
+      duration,
+      updatedAt,
+    };
   }
 }
