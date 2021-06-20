@@ -10,7 +10,7 @@
 const { nanoid } = require('nanoid');
 
 
-class NotesService {
+class MusicsService {
   constructor() {
     this._music = [];
   }
@@ -76,4 +76,4 @@ class NotesService {
 }
 
 
-module.exports = NotesService;
+module.exports = MusicsService;
