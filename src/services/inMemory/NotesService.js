@@ -13,6 +13,7 @@ class NotesService {
     this._music = [];
   }
 
+
   addMusic({ title, year, performer, genre, duration }) {
     const id = nanoid(16);
     const insertedAt = new Date().toISOString();
@@ -29,5 +30,17 @@ class NotesService {
     }
 
     return id;
+  }
+
+  getMusic() {
+    return this._music;
+  }
+
+  getMusicById(id) {
+    const music = this._music.filter((n) => n.id === id)[0];
+    if (!music) {
+      throw new Error('Catatan tidak ditemukan');
+    }
+    return music;
   }
 }
