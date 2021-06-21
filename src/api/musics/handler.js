@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-empty-function */
 /* eslint-disable object-curly-newline */
@@ -8,6 +9,8 @@
 /* eslint-disable no-multiple-empty-lines */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable padded-blocks */
+
+const ClientError = require('../../exceptions/ClientError');
 
 
 class MusicsHandler {
@@ -42,13 +45,25 @@ class MusicsHandler {
       return response;
 
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+ 
+      // Server ERROR!
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
       });
 
-      response.code(400);
+      response.code(500);
+      console.error(error);
       return response;
+
     }
   }
   
@@ -73,34 +88,60 @@ class MusicsHandler {
         },
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+ 
+      // Server ERROR!
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
       });
-      response.code(404);
+
+      response.code(500);
+      console.error(error);
       return response;
+
     }
   }
 
   async putSongByIdHandler(request, h){
     try {
       this._validator.validateMusicPayload(request.payload);
-      
+
       const { id } = request.params;
  
       await this._service.editMusicById(id, request.payload);
  
       return {
         status: 'success',
-        message: 'lagu berhasil diperbarui',
+        message: 'Lagu berhasil diperbarui',
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+ 
+      // Server ERROR!
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
       });
-      response.code(404);
+
+      response.code(500);
+      console.error(error);
       return response;
+
     }
   }
 
@@ -112,15 +153,28 @@ class MusicsHandler {
       
       return {
         status: 'success',
-        message: 'lagu berhasil dihapus',
+        message: 'Lagu berhasil dihapus',
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+ 
+      // Server ERROR!
       const response = h.response({
-        status: 'fail',
-        message: 'Lagu gagal dihapus. Id tidak ditemukan',
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
       });
-      response.code(404);
+
+      response.code(500);
+      console.error(error);
       return response;
+      
     }
   }
 }
