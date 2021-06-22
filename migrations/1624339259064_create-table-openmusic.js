@@ -15,7 +15,7 @@ exports.up = (pgm) => {
       notNull: true,
     },
     year: {
-      type: 'VARCHAR(50)',
+      type: 'INT',
       notNull: true,
     },
     performer: {
@@ -27,7 +27,7 @@ exports.up = (pgm) => {
       notNull: true,
     },
     duration: {
-      type: 'VARCHAR(50)',
+      type: 'INT',
       notNull: true,
     },
     inserted_at: {

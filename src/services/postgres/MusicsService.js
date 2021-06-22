@@ -40,7 +40,7 @@ class MusicsService {
   }
 
   async getMusic() {
-    const result = await this._pool.query('SELECT * FROM openmusic');
+    const result = await this._pool.query('SELECT id, title, performer FROM openmusic');
     return result.rows.map(mapDBToModel);
   }
 

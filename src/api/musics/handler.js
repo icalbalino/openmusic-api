@@ -79,12 +79,12 @@ class MusicsHandler {
 
   async getSongByIdHandler(request, h){
     try {
-      const { id } = request.params;
-      const songs = await this._service.getMusicById(id);
+      const { songId } = request.params;
+      const song = await this._service.getMusicById(songId);
       return {
         status: 'success',
         data: {
-          songs,
+          song,
         },
       };
     } catch (error) {
@@ -114,9 +114,9 @@ class MusicsHandler {
     try {
       this._validator.validateMusicPayload(request.payload);
 
-      const { id } = request.params;
+      const { songId } = request.params;
  
-      await this._service.editMusicById(id, request.payload);
+      await this._service.editMusicById(songId, request.payload);
  
       return {
         status: 'success',
@@ -147,9 +147,9 @@ class MusicsHandler {
 
   async deleteSongByIdHandler(request, h){
     try {
-      const { id } = request.params;
+      const { songId } = request.params;
 
-      await this._service.deleteMusicById(id);
+      await this._service.deleteMusicById(songId);
       
       return {
         status: 'success',
