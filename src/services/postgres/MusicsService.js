@@ -73,7 +73,7 @@ class MusicsService {
     }
   }
 
-  async deleteNoteById(id) {
+  async deleteMusicById(id) {
     const query = {
       text: 'DELETE FROM openmusic WHERE id = $1 RETURNING id',
       values: [id],
