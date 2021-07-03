@@ -27,3 +27,5 @@ Pada OpenMusic API versi 2
 npm run migrate create "create table users"
 npm run migrate up
 
+npm install bcrypt
+
