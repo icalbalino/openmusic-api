@@ -16,3 +16,14 @@ npm install dotenv
 npm install joi
 npm install node-pg-migrate
 npm install pg
+
+
+Menerapkan  autentikasi(Authentication)
+            otorisasi (Authorization) 
+            Normalisasi Database
+Pada OpenMusic API versi 2
+
+//membuat tabel users
+npm run migrate create "create table users"
+npm run migrate up
+
