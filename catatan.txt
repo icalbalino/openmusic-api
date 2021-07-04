@@ -29,3 +29,6 @@ npm run migrate up
 
 npm install bcrypt
 
+//membuat tabel authentications
+npm run migrate create "create table authentications"
+npm run migrate up
