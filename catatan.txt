@@ -37,3 +37,8 @@ npm run migrate up
 npm install @hapi/jwt
 require('crypto').randomBytes(64).toString('hex');
 
+//membuat column playlists (Authorization)
+//npm run migrate create "add column playlists to table openmusic" -- salah
+npm run migrate create "create table playlists"
+pgm.addConstraint( tablename, constraint_name, expression )
+npm run migrate up
