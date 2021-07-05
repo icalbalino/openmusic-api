@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 const {
   PlaylistPayloadSchema,
-  MusicPayloadSchema,
+  PlaylistMusicPayloadSchema,
 } = require('./schema');
 const InvariantError = require('../../exceptions/InvariantError');
 
@@ -13,7 +13,7 @@ const PlaylistsValidator = {
     }
   },
   validateMusicPayload: (payload) => {
-    const validationResult = MusicPayloadSchema.validate(payload);
+    const validationResult = PlaylistMusicPayloadSchema.validate(payload);
     if (validationResult.error) {
       throw new InvariantError(validationResult.error.message);
     }
