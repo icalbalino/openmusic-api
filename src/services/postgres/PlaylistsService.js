@@ -59,7 +59,7 @@ class PlaylistsService {
 
   async addMusicPlaylist(playlistId, songId) {
     const query = {
-      text: 'INSERT INTO playlistsongs VALUES ($1, $2) RETURNING id',
+      text: 'INSERT INTO playlistsongs (playlist_id, song_id) VALUES($1, $2) RETURNING id',
       values: [playlistId, songId],
     };
 
@@ -72,14 +72,14 @@ class PlaylistsService {
 
   async getMusicPlaylist(playlistId) {
     const query = {
-      text: 'SELECT openmusic.id, openmusic.title, openmusic.performer FROM openmusic JOIN playlistsongs ON openmusic.id = playlistsongs.song_id WHERE playlistsongs.playlist_id = $1',
+      text: 'SELECT openmusic.id, openmusic.title, openmusic.performer FROM openmusic LEFT JOIN playlistsongs ON openmusic.id = playlistsongs.song_id WHERE playlistsongs.playlist_id = $1',
       values: [playlistId],
     };
 
     const result = await this._pool(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Playlist tidak ditemukan');
+      throw new NotFoundError('Lagu tidak ditemukan');
     }
 
     return result.rows;
@@ -94,7 +94,7 @@ class PlaylistsService {
     const result = await this._pool(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Playlist gagal dihapus. Id tidak ditemukan');
+      throw new NotFoundError('Lagu gagal dihapus. Id tidak ditemukan');
     }
   }
 

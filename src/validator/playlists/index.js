@@ -12,7 +12,7 @@ const PlaylistsValidator = {
       throw new InvariantError(validationResult.error.message);
     }
   },
-  validateMusicPayload: (payload) => {
+  validatePlaylistMusicPayload: (payload) => {
     const validationResult = PlaylistMusicPayloadSchema.validate(payload);
     if (validationResult.error) {
       throw new InvariantError(validationResult.error.message);
