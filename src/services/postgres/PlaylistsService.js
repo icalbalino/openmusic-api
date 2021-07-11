@@ -31,7 +31,10 @@ class PlaylistsService {
 
   async getPlaylist(user) {
     const query = {
-      text: 'SELECT playlists.id, playlists.name, users.username FROM playlists LEFT JOIN users ON users.id = playlists.owner WHERE playlists.owner = $1',
+      text: `SELECT playlists.id, playlists.name, users.username
+      FROM playlists
+      LEFT JOIN users ON users.id = playlists.owner
+      WHERE playlists.owner = $1;`,
       values: [user],
     };
 
@@ -72,7 +75,11 @@ class PlaylistsService {
 
   async getMusicPlaylist(playlistId) {
     const query = {
-      text: 'SELECT openmusic.id, openmusic.title, openmusic.performer FROM openmusic LEFT JOIN playlistsongs ON openmusic.id = playlistsongs.song_id WHERE playlistsongs.playlist_id = $1',
+      text: `SELECT openmusic.id, openmusic.title, openmusic.performer
+      FROM openmusic
+      JOIN playlistsongs
+      ON openmusic.id = playlistsongs.song_id
+      WHERE playlistsongs.playlist_id = $1;`,
       values: [playlistId],
     };
 
@@ -87,7 +94,9 @@ class PlaylistsService {
 
   async deleteMusicPlaylist(playlistId, songId) {
     const query = {
-      text: 'DELETE FROM playlistsongs WHERE playlist_id = $1 AND song_id = $2 RETURNING id',
+      text: `DELETE FROM playlistsongs
+      WHERE playlist_id = $1 AND song_id = $2
+      RETURNING id;`,
       values: [playlistId, songId],
     };
 
