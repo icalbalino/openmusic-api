@@ -1,20 +1,21 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-multiple-empty-lines */
-const { nanoid } = require('nanoid');
 const { Pool } = require('pg');
+const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
 const AuthorizationError = require('../../exceptions/AuthorizationError');
 
+
 class PlaylistsService {
-  constructor() {
+  constructor(collaborationService) {
     this._pool = new Pool();
+    this._collaborationService = collaborationService;
   }
 
   async addPlaylist({ name, owner }) {
     const id = `playlist-${nanoid(16)}`;
-
     const query = {
       text: 'INSERT INTO playlists VALUES($1, $2, $3) RETURNING id',
       values: [id, name, owner],
@@ -34,16 +35,12 @@ class PlaylistsService {
       text: `SELECT playlists.id, playlists.name, users.username
       FROM playlists
       LEFT JOIN users ON users.id = playlists.owner
-      WHERE playlists.owner = $1;`,
+      LEFT JOIN collaborations ON playlists.id = collaborations.playlist_id  
+      WHERE playlists.owner = $1 OR collaborations.user_id = $1;`,
       values: [user],
     };
 
     const result = await this._pool.query(query);
-
-    if (!result.rows.length) {
-      throw new NotFoundError('Playlist tidak ditemukan');
-    }
-
     return result.rows;
   }
 
@@ -83,12 +80,7 @@ class PlaylistsService {
       values: [playlistId],
     };
 
-    const result = await this._pool(query);
-
-    if (!result.rows.length) {
-      throw new NotFoundError('Lagu tidak ditemukan');
-    }
-
+    const result = await this._pool.query(query);
     return result.rows;
   }
 
@@ -100,10 +92,10 @@ class PlaylistsService {
       values: [playlistId, songId],
     };
 
-    const result = await this._pool(query);
+    const result = await this._pool.query(query);
 
     if (!result.rows.length) {
-      throw new NotFoundError('Lagu gagal dihapus. Id tidak ditemukan');
+      throw new InvariantError('Lagu gagal dihapus. Id tidak ditemukan');
     }
   }
 
@@ -122,6 +114,30 @@ class PlaylistsService {
     if (playlist.owner !== owner) {
       throw new AuthorizationError('Anda tidak berhak mengakses resource ini');
     }
+  }
+
+  async verifyPlaylistAccess(playlistId, userId) {
+    try {
+      await this.verifyPlaylistOwner(playlistId, userId);
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        throw error;
+      }
+      try {
+        await this._collaborationService.verifyCollaborator(playlistId, userId);
+      } catch {
+        throw error;
+      }
+    }
+  }
+
+  async getUsersByUsername(username) {
+    const query = {
+      text: 'SELECT id, username, fullname FROM users WHERE username LIKE $1',
+      values: [`%${username}%`],
+    };
+    const result = await this._pool.query(query);
+    return result.rows;
   }
 }
 

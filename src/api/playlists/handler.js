@@ -15,6 +15,7 @@ class PlaylistsHandler {
     this.postSongHandler = this.postSongHandler.bind(this);
     this.getSongsHandler = this.getSongsHandler.bind(this);
     this.deleteSongByIdHandler = this.deleteSongByIdHandler.bind(this);
+    this.getUsersByUsernameHandler = this.getUsersByUsernameHandler.bind(this);
   }
 
 
@@ -105,7 +106,7 @@ class PlaylistsHandler {
       const { songId } = request.payload;
       const { id: credentialId } = request.auth.credentials;
 
-      await this._service.verifyPlaylistOwner(playlistId, credentialId);
+      await this._service.verifyPlaylistAccess(playlistId, credentialId);
       await this._service.addMusicPlaylist(playlistId, songId);
 
       const response = h.response({
@@ -140,7 +141,7 @@ class PlaylistsHandler {
       const { playlistId } = request.params;
       const { id: credentialId } = request.auth.credentials;
 
-      await this._service.verifyPlaylistOwner(playlistId, credentialId);
+      await this._service.verifyPlaylistAccess(playlistId, credentialId);
       const songs = await this._service.getMusicPlaylist(playlistId);
 
       return {
@@ -176,12 +177,43 @@ class PlaylistsHandler {
       const { songId } = request.payload;
       const { id: credentialId } = request.auth.credentials;
 
-      await this._service.verifyPlaylistOwner(playlistId, credentialId);
+      await this._service.verifyPlaylistAccess(playlistId, credentialId);
       await this._service.deleteMusicPlaylist(playlistId, songId);
 
       return {
         status: 'success',
         message: 'Lagu berhasil dihapus dari playlist',
+      };
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      // Server ERROR!
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
+      });
+      response.code(500);
+      console.error(error);
+      return response;
+    }
+  }
+
+  async getUsersByUsernameHandler(request, h) {
+    try {
+      const { username = '' } = request.query;
+      const users = await this._service.getUsersByUsername(username);
+      return {
+        status: 'success',
+        data: {
+          users,
+        },
       };
     } catch (error) {
       if (error instanceof ClientError) {

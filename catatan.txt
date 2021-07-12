@@ -46,3 +46,7 @@ npm run migrate up
 //membuat tabel playlistsongs
 npm run migrate create "create table playlistsongs"
 npm run migrate up
+
+//membuat table collaborations
+npm run migrate create "create table collaborations"
+npm run migrate up
