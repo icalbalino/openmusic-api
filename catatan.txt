@@ -50,3 +50,8 @@ npm run migrate up
 //membuat table collaborations
 npm run migrate create "create table collaborations"
 npm run migrate up
+
+//message broker with rabbitMQ
+npm install amqplib
+create folder rabbitmq
+create file ProducerService.js
