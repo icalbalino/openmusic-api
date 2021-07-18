@@ -60,3 +60,8 @@ create file ProducerService.js
 create services file StorageService.js
 create validator & plugin uploads
 npm install @hapi/inert
+
+//caching
+npm install redis
+create cacheservice in folder redis
+create CacheService.js
