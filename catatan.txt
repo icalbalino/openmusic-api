@@ -55,3 +55,8 @@ npm run migrate up
 npm install amqplib
 create folder rabbitmq
 create file ProducerService.js
+
+//storage
+create services file StorageService.js
+create validator & plugin uploads
+npm install @hapi/inert
