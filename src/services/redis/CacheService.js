@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-/* eslint-disable no-underscore-dangle */
 const redis = require('redis');
 
 class CacheService {

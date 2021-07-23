@@ -1,9 +1,3 @@
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable camelcase */
-
-// exports.shorthands = undefined;
-
-
 exports.up = (pgm) => {
   pgm.createTable('openmusic', {
     id: {
@@ -40,7 +34,6 @@ exports.up = (pgm) => {
     },
   });
 };
-
 
 exports.down = (pgm) => {
   pgm.dropTable('openmusic');

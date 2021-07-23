@@ -11,6 +11,46 @@
     "parserOptions": {
         "ecmaVersion": 12
     },
-    "rules": {
-    }
+    "rules": {},
+    "overrides": [
+        {
+            "files": [
+                "*-test.js",
+                "*server.js",
+                "*1624339259064_create-table-openmusic.js",
+                "*1625326759346_create-table-users.js",
+                "*1625413288978_create-table-authentications.js",
+                "*1625483637181_create-table-playlists.js",
+                "*1625507277084_create-table-playlistsongs.js",
+                "*1626031749325_create-table-collaborations.js",
+                "*handler.js",
+                "*index.js",
+                "*routes.js",
+                "*AuthenticationError.js",
+                "*AuthorizationError.js",
+                "*ClientError.js",
+                "*InvariantError.js",
+                "*NotFoundError.js",
+                "*AuthenticationsService.js",
+                "*CollaborationsService.js",
+                "*MusicsService.js",
+                "*PlaylistsService.js",
+                "*UsersService.js",
+                "*ProducerService.js",
+                "*CacheService.js",
+                "*StorageService.js",
+                "*TokenManager.js",
+                "*schema.js"
+            ],
+            "rules": {
+                "linebreak-style": "off",
+                "no-underscore-dangle": "off",
+                "no-console": "off",
+                "no-multiple-empty-lines": "off",
+                "spaced-comment": "off",
+                "camelcase": "off",
+                "object-curly-newline": "off"
+            }
+        }
+    ]
 }

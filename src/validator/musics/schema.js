@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-multiple-empty-lines */
-
 const Joi = require('joi');
 
 const MusicPayloadSchema = Joi.object({
@@ -10,6 +7,5 @@ const MusicPayloadSchema = Joi.object({
   genre: Joi.string().required(),
   duration: Joi.number(),
 });
-
 
 module.exports = { MusicPayloadSchema };

@@ -1,12 +1,8 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-multiple-empty-lines */
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
 const AuthorizationError = require('../../exceptions/AuthorizationError');
-
 
 class PlaylistsService {
   constructor(collaborationService, cacheService) {
@@ -53,7 +49,7 @@ class PlaylistsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Playlist gagal dihapus. Id tidak ditemukan');
     }
   }
@@ -103,7 +99,7 @@ class PlaylistsService {
 
     const result = await this._pool.query(query);
 
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new InvariantError('Lagu gagal dihapus. Id tidak ditemukan');
     }
 
@@ -117,7 +113,7 @@ class PlaylistsService {
     };
 
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError('Playlists tidak ditemukan');
     }
 
@@ -151,6 +147,5 @@ class PlaylistsService {
     return result.rows;
   }
 }
-
 
 module.exports = PlaylistsService;

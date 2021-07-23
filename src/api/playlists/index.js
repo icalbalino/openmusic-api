@@ -1,8 +1,5 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-multiple-empty-lines */
 const PlaylistsHandler = require('./handler');
 const routes = require('./routes');
-
 
 module.exports = {
   name: 'playlists',

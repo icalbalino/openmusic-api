@@ -1,8 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable camelcase */
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable object-curly-newline */
-
 const mapDBToModel = ({
   id,
   title,
@@ -22,6 +17,5 @@ const mapDBToModel = ({
   insertedAt: inserted_at,
   updatedAt: updated_at,
 });
-
 
 module.exports = { mapDBToModel };

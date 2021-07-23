@@ -1,10 +1,5 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable eol-last */
-
-const InvariantError = require('../../exceptions/InvariantError');
 const { MusicPayloadSchema } = require('./schema');
-
+const InvariantError = require('../../exceptions/InvariantError');
 
 const MusicsValidator = {
   validateMusicPayload: (payload) => {
@@ -14,6 +9,5 @@ const MusicsValidator = {
     }
   },
 };
-
 
 module.exports = MusicsValidator;

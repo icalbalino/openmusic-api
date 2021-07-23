@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const amqp = require('amqplib');
 
 const ProducerService = {

@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-console */
 const ClientError = require('../../exceptions/ClientError');
 
 class ExportsHandler {

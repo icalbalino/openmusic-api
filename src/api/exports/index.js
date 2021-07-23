@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 const ExportsHandler = require('./handler');
 const routes = require('./routes');
 

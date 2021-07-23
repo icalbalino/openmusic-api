@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-multiple-empty-lines */
-
 const routes = (handler) => [
   {
     method: 'POST',
@@ -28,6 +25,5 @@ const routes = (handler) => [
     handler: handler.deleteSongByIdHandler,
   },
 ];
-
 
 module.exports = routes;

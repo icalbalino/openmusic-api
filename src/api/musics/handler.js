@@ -1,17 +1,4 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-empty-function */
-/* eslint-disable object-curly-newline */
-/* eslint-disable space-before-blocks */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable padded-blocks */
-
 const ClientError = require('../../exceptions/ClientError');
-
 
 class MusicsHandler {
   constructor(service, validator) {
@@ -25,14 +12,18 @@ class MusicsHandler {
     this.deleteSongByIdHandler = this.deleteSongByIdHandler.bind(this);
   }
 
-  async postSongsHandler(request, h){
+  async postSongsHandler(request, h) {
     try {
       this._validator.validateMusicPayload(request.payload);
 
-      const { title = 'untitled', year, performer, genre, duration } = request.payload;
- 
-      const songId = await this._service.addMusic({ title, year, performer, genre, duration });
- 
+      const {
+        title = 'untitled', year, performer, genre, duration,
+      } = request.payload;
+
+      const songId = await this._service.addMusic({
+        title, year, performer, genre, duration,
+      });
+
       const response = h.response({
         status: 'success',
         message: 'Lagu berhasil ditambahkan',
@@ -43,7 +34,6 @@ class MusicsHandler {
 
       response.code(201);
       return response;
-
     } catch (error) {
       if (error instanceof ClientError) {
         const response = h.response({
@@ -53,7 +43,7 @@ class MusicsHandler {
         response.code(error.statusCode);
         return response;
       }
- 
+
       // Server ERROR!
       const response = h.response({
         status: 'error',
@@ -63,21 +53,41 @@ class MusicsHandler {
       response.code(500);
       console.error(error);
       return response;
-
     }
   }
-  
-  async getSongsHandler(){
-    const songs = await this._service.getMusic();
-    return {
-      status: 'success',
-      data: {
-        songs,
-      },
-    };
+
+  async getSongsHandler(h) {
+    try {
+      const songs = await this._service.getMusic();
+      return {
+        status: 'success',
+        data: {
+          songs,
+        },
+      };
+    } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
+
+      // Server ERROR!
+      const response = h.response({
+        status: 'error',
+        message: 'Maaf, terjadi kegagalan pada server kami.',
+      });
+
+      response.code(500);
+      console.error(error);
+      return response;
+    }
   }
 
-  async getSongByIdHandler(request, h){
+  async getSongByIdHandler(request, h) {
     try {
       const { songId } = request.params;
       const song = await this._service.getMusicById(songId);
@@ -96,7 +106,7 @@ class MusicsHandler {
         response.code(error.statusCode);
         return response;
       }
- 
+
       // Server ERROR!
       const response = h.response({
         status: 'error',
@@ -106,18 +116,17 @@ class MusicsHandler {
       response.code(500);
       console.error(error);
       return response;
-
     }
   }
 
-  async putSongByIdHandler(request, h){
+  async putSongByIdHandler(request, h) {
     try {
       this._validator.validateMusicPayload(request.payload);
 
       const { songId } = request.params;
- 
+
       await this._service.editMusicById(songId, request.payload);
- 
+
       return {
         status: 'success',
         message: 'Lagu berhasil diperbarui',
@@ -131,7 +140,7 @@ class MusicsHandler {
         response.code(error.statusCode);
         return response;
       }
- 
+
       // Server ERROR!
       const response = h.response({
         status: 'error',
@@ -141,16 +150,15 @@ class MusicsHandler {
       response.code(500);
       console.error(error);
       return response;
-
     }
   }
 
-  async deleteSongByIdHandler(request, h){
+  async deleteSongByIdHandler(request, h) {
     try {
       const { songId } = request.params;
 
       await this._service.deleteMusicById(songId);
-      
+
       return {
         status: 'success',
         message: 'Lagu berhasil dihapus',
@@ -164,7 +172,7 @@ class MusicsHandler {
         response.code(error.statusCode);
         return response;
       }
- 
+
       // Server ERROR!
       const response = h.response({
         status: 'error',
@@ -174,7 +182,6 @@ class MusicsHandler {
       response.code(500);
       console.error(error);
       return response;
-      
     }
   }
 }

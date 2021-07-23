@@ -1,12 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable padded-blocks */
-/* eslint-disable no-console */
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable no-unused-vars */
-/* eslint-disable spaced-comment */
-
 // mengimpor dotenv dan menjalankan konfigurasinya
 require('dotenv').config();
 
@@ -17,7 +8,6 @@ const path = require('path');
 
 //musics
 const musics = require('./api/musics');
-//const MusicsService = require('./services/inMemory/MusicsService');
 const MusicsService = require('./services/postgres/MusicsService');
 const MusicsValidator = require('./validator/musics');
 
@@ -65,7 +55,6 @@ const init = async () => {
   const playlistsService = new PlaylistsService(collaborationsService, cacheService);
   const storageService = new StorageService(path.resolve(__dirname, 'api/uploads/file/pictures'));
 
-
   const server = Hapi.server({
     port: process.env.PORT,
     host: process.env.HOST,
@@ -76,8 +65,6 @@ const init = async () => {
     },
   });
 
-
-  // registrasi plugin eksternal
   await server.register([
     {
       plugin: Jwt,
@@ -87,7 +74,6 @@ const init = async () => {
     },
   ]);
 
-  // mendefinisikan strategy autentikasi jwt
   server.auth.strategy('openmusicsapp_jwt', 'jwt', {
     keys: process.env.ACCESS_TOKEN_KEY,
     verify: {
@@ -159,11 +145,9 @@ const init = async () => {
       },
     },
   ]);
- 
+
   await server.start();
   console.log(`Server berjalan pada ${server.info.uri}`);
-
 };
-
 
 init();

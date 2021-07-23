@@ -1,12 +1,9 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-multiple-empty-lines */
 const {
   PostAuthenticationPayloadSchema,
   PutAuthenticationPayloadSchema,
   DeleteAuthenticationPayloadSchema,
 } = require('./schema');
 const InvariantError = require('../../exceptions/InvariantError');
-
 
 const AuthenticationsValidator = {
   validatePostAuthenticationPayload: (payload) => {
@@ -30,6 +27,5 @@ const AuthenticationsValidator = {
     }
   },
 };
-
 
 module.exports = AuthenticationsValidator;

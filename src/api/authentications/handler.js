@@ -1,9 +1,4 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-/* eslint-disable no-multiple-empty-lines */
-/* eslint-disable no-underscore-dangle */
 const ClientError = require('../../exceptions/ClientError');
-
 
 class AuthenticationsHandler {
   constructor(authenticationsService, usersService, tokenManager, validator) {
@@ -130,6 +125,5 @@ class AuthenticationsHandler {
     }
   }
 }
-
 
 module.exports = AuthenticationsHandler;
